@@ -1,0 +1,358 @@
+{% liquid
+  assign title = section.settings.title
+  assign paragraph = section.settings.paragraph
+  assign bgcolor = section.settings.backgroundColor
+  assign pt = section.settings.padding_top
+  assign pb = section.settings.padding_bottom
+  assign pl = section.settings.padding_left
+  assign pr = section.settings.padding_right
+  assign textalign = section.settings.alignment
+  assign title_size = section.settings.title_size
+  assign paragraph_size = section.settings.paragraph_size
+  assign title_color = section.settings.title_color
+  assign paragraph_color = section.settings.paragraph_color
+  assign title_weight = section.settings.title_weight
+  assign paragraph_weight = section.settings.paragraph_weight
+  assign button_text = section.settings.button_text
+  assign button_link = section.settings.button_link
+  assign button_bgcolor = section.settings.button_bgcolor
+  assign button_textcolor = section.settings.button_textcolor
+  assign image = section.settings.image
+  assign image_width = section.settings.image_width
+  assign image_height = section.settings.image_height
+  assign icon_text = section.settings.icon
+  assign ratingtext = section.settings.rating_text
+%}
+
+<div class="container">
+  <div id="content-{{ section.id }}" class="hero-content">
+    <div id="rating-{{ section.id }}">
+      {% if icon_text != blank %}
+        <img src="{{ icon_text | image_url: width: auto, height:16 }}">
+      {% endif %}
+      {% if ratingtext != blank %}
+        {{ ratingtext }}
+      {% endif %}
+    </div>
+    <div id="title-{{ section.id }}" class="hero-title">
+      {% if title != blank %}
+        {{ title }}
+      {% endif %}
+    </div>
+    <div id="pg-{{ section.id }}" class="hero-paragraph">
+      {% if paragraph != blank %}
+        {{ paragraph }}
+      {% endif %}
+    </div>
+    {% if button_link != blank %}
+      <a href="{{ button_link }}" class="btn-{{ section.id }} hero-button">{{ button_text }}</a>
+    {% endif %}
+  </div>
+  <div class="img-{{ section.id }} hero-image">
+    {% if image != blank %}
+      <img src="{{ image | image_url: width: 650, height: 570 }}" alt="Hero Image">
+    {% endif %}
+  </div>
+</div>
+
+<style>
+    *{
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    #shopify-section-{{ section.id }} {
+      background-color: {{ bgcolor }};
+      padding-top: {{ pt }}px;
+      padding-bottom: {{ pb }}px;
+      padding-left: {{ pl }}px;
+      padding-right: {{ pr }}px;
+      margin: 0 auto;
+
+    }
+
+    #shopify-section-{{ section.id }} .container {
+      max-width: {{ section.settings.container }};
+      margin: 0 auto;
+      padding: 15px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #rating-{{ section.id }}{
+    display: flex;
+    justify-content: left;
+      padding-bottom: 20px;
+    }
+
+    #title-{{ section.id }} {
+      color: {{ title_color }};
+      text-align: {{ textalign }};
+      font-size: {{ title_size }}px;
+      line-height: 1.1;
+      font-weight: {{ title_weight }};
+      padding-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    #pg-{{ section.id }} {
+      color: {{ paragraph_color }};
+      text-align: {{ textalign }};
+      font-size: {{ paragraph_size }}px;
+      line-height: 1.5;
+      font-weight: {{ paragraph_weight }};
+      padding-bottom: 15px;
+    }
+  #content-{{ section.id }}{
+    flex-basis: 55%;
+    flex-grow: 1;
+  }
+
+    .img-{{ section.id }} {
+
+    flex-basis: 45%;
+    flex-grow: 1;
+  }
+    .btn-{{ section.id }} {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: {{ button_bgcolor }};
+      color: {{ button_textcolor }};
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 5px;
+      margin-top: 15px;
+    }
+
+    .hero-image img {
+      max-width: 100%;
+      height: auto;
+      width: {{image_width }};
+      height: {{image_height}}
+    }
+</style>
+
+{% schema %}
+{
+  "name": "Hero Section",
+  "class": "hero-section",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Heading Text"
+    },
+    {
+      "type": "richtext",
+      "id": "paragraph",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "button_bgcolor",
+      "label": "Button Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_textcolor",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Style Section"
+    },
+    {
+      "type": "color",
+      "id": "backgroundColor",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "paragraph_color",
+      "label": "Paragraph Color",
+      "default": "#000000"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Image"
+    },
+     {
+      "type": "image_picker",
+      "id": "icon",
+      "label": "icon with text"
+    },
+    {
+      "type": "richtext",
+      "id": "rating_text",
+      "label": "Rating Text"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "Image Width",
+      "min": 100,
+      "max": 1200,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "label": "Image Height",
+      "min": 100,
+      "max": 1200,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Padding Style"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Padding Left",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Padding Right",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title Font Size",
+      "min": 16,
+      "max": 120,
+      "step": 2,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "paragraph_size",
+      "label": "Paragraph Font Size",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "title_weight",
+      "label": "Title Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "paragraph_weight",
+      "label": "Paragraph Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "select",
+      "id": "container",
+      "label": "Container",
+      "options": [
+        {
+          "label": "container-fluid",
+          "value": "100%"
+        },
+        {
+          "label": "Desktop",
+          "value": "1320px"
+        },
+        {
+          "label": "laptop",
+          "value": "1170px"
+        },
+        {
+          "label": "Mobile",
+          "value": "540px"
+        }
+      ],
+      "default": "1170px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Section"
+    }
+  ]
+}
+{% endschema %}
